@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jakarta & Persija - Satu Kota, Satu Jiwa</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#F95001', // Warna Oranye khas The Jakmania
+                            red: '#D3142A',    // Merah Persija
+                            dark: '#1C1C1C',   // Abu-abu gelap / hitam elegan
+                            gray: '#333333',
+                            light: '#F8F9FA'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Oswald', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Animations */
+        .hover-scale {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .hover-scale:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(249, 80, 1, 0.4), 0 10px 10px -5px rgba(249, 80, 1, 0.2);
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bg-hero {
+            background-image: linear-gradient(rgba(28, 28, 28, 0.8), rgba(28, 28, 28, 0.6)), url('https://images.unsplash.com/photo-1555899434-94d1368aa7af?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .img-gradient::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(28, 28, 28, 1), transparent);
+        }
+
+        /* Dropdown Hover Visibility */
+        .group:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-brand-light text-brand-dark font-body antialiased overflow-x-hidden">
+
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-brand-dark/90 backdrop-blur-md text-white py-4 shadow-lg border-b border-brand-orange/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <a href="#" class="font-heading font-bold text-2xl tracking-wider text-brand-orange">
+                PSJ<span class="text-white">JKT</span>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#hero" class="hover:text-brand-orange transition-colors font-semibold">Beranda</a>
+                <a href="#sejarah-jakarta" class="hover:text-brand-orange transition-colors font-semibold">Jakarta</a>
+                
+                <!-- Persija Menu with Dropdown -->
+                <div class="relative group py-2">
+                    <button class="hover:text-brand-orange transition-colors font-semibold flex items-center gap-1">
+                        Persija
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <!-- Dropdown Items -->
+                    <div class="dropdown-menu absolute left-0 mt-2 w-56 bg-brand-dark border border-brand-gray rounded-lg shadow-xl opacity-0 invisible translate-y-2 transition-all duration-300 overflow-hidden">
+                        <a href="#persija" class="block px-4 py-3 hover:bg-brand-orange hover:text-white transition-colors border-b border-brand-gray/50">Macan Kemayoran</a>
+                        <a href="#korwil-batas" class="block px-4 py-3 hover:bg-brand-orange hover:text-white transition-colors border-b border-brand-gray/50">Jak Korwil</a>
+                        <a href="#galeri-persija" class="block px-4 py-3 hover:bg-brand-orange hover:text-white transition-colors border-b border-brand-gray/50">Galeri Album</a>
+                        <a href="#video-persija" class="block px-4 py-3 hover:bg-brand-orange hover:text-white transition-colors">Video Eksklusif</a>
+                    </div>
+                </div>
+
+                <a href="#keindahan" class="hover:text-brand-orange transition-colors font-semibold">Landmark</a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-btn" class="text-white hover:text-brand-orange focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-dark pb-4 px-4 border-t border-brand-gray mt-4">
+            <a href="#hero" class="block py-3 hover:text-brand-orange transition-colors border-b border-gray-800">Beranda</a>
+            <a href="#sejarah-jakarta" class="block py-3 hover:text-brand-orange transition-colors border-b border-gray-800">Jakarta</a>
+            <div class="py-3 border-b border-gray-800">
+                <span class="block text-brand-orange font-semibold mb-2">Persija</span>
+                <a href="#persija" class="block py-2 pl-4 text-gray-300 hover:text-white transition-colors">- Macan Kemayoran</a>
+                <a href="#korwil-batas" class="block py-2 pl-4 text-gray-300 hover:text-white transition-colors">- Korwil Tigaraksa & Solear</a>
+                <a href="#galeri-persija" class="block py-2 pl-4 text-gray-300 hover:text-white transition-colors">- Galeri Album</a>
+                <a href="#video-persija" class="block py-2 pl-4 text-gray-300 hover:text-white transition-colors">- Video Eksklusif</a>
+            </div>
+            <a href="#keindahan" class="block py-3 hover:text-brand-orange transition-colors">Landmark</a>
+        </div>
+    </nav>
+
+    <section id="hero" class="min-h-screen bg-hero flex items-center justify-center relative">
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent"></div>
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+            <h1 class="font-heading text-5xl md:text-7xl font-bold text-white mb-6 uppercase tracking-wide fade-in-up">
+                Sang Ibu Kota <br> <span class="text-brand-orange">Jakarta</span>
+            </h1>
+            <p class="text-lg md:text-2xl text-gray-300 mb-10 font-light fade-in-up delay-100 max-w-3xl mx-auto">
+                Jakarta bukan hanya sebuah kota.
+                Ia adalah cerita tentang jutaan langkah,
+                tentang mimpi yang datang dari berbagai arah,
+                tentang pertemuan, perjuangan, dan harapan.
+            </p>
+        </div>
+    </section>
+
+    <section id="sejarah-jakarta" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="order-2 lg:order-1 relative rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="https://cdn.phototourl.com/member/2026-10-04-2b95b584-3472-4920-af77-2f8870b53102.jpg" alt="Kota Tua Jakarta" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700">
+                    <div class="absolute top-4 left-4 bg-brand-dark text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-wider">
+                        Sunda Kelapa ke Batavia
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-1 bg-brand-orange"></div>
+                        <h4 class="font-heading text-brand-orange uppercase tracking-widest font-bold">Jejak Peradaban</h4>
+                    </div>
+                    <h2 class="font-heading text-4xl md:text-5xl font-bold text-brand-dark mb-6 leading-tight">
+                        Dari Bandar Sunda Kelapa Hingga Megapolitan
+                    </h2>
+                    <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+                        Sejarah Jakarta adalah narasi panjang tentang asimilasi, perdagangan, dan perjuangan. Dimulai sebagai pelabuhan sibuk bernama <strong>Sunda Kelapa</strong>, ditaklukkan dan diubah menjadi <strong>Jayakarta</strong> oleh Fatahillah pada tahun 1527.
+                    </p>
+                    <p class="text-gray-600 text-lg leading-relaxed">
+                        Masa kolonial mengubah wajahnya menjadi <strong>Batavia</strong>, pusat komando VOC yang elegan sekaligus kejam. Setelah kemerdekaan, ia berganti nama menjadi <strong>Jakarta</strong>, pusat panggung politik, ekonomi, dan kebudayaan Indonesia modern.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="persija" class="py-24 bg-brand-dark text-white relative border-t-8 border-brand-orange overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-orange rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-brand-red rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-red">MACAN KEMAYORAN</span>
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Persija bukan hanya sebuah klub. Ia adalah kebanggaan yang diwariskan, semangat yang tak pernah padam, dan warna yang menyatukan jutaan hati Persija Jakarta. Bukan sekadar klub. Ini rumah. Ini kebanggaan.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-brand-gray p-8 rounded-2xl hover-scale border border-gray-700">
+                    <div class="text-brand-orange mb-4">
+                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold mb-3">Lahirnya Legenda (1928)</h3>
+                    <p class="text-gray-400">Berdiri pada 28 November 1928 dengan nama VIJ (Voetbalbond Indonesische Jacatra). Menjadi salah satu klub pendiri PSSI.</p>
+                </div>
+                
+                <div class="bg-brand-orange p-8 rounded-2xl hover-scale transform md:-translate-y-4 shadow-[0_10px_30px_rgba(249,80,1,0.3)]">
+                    <div class="text-white mb-4">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold mb-3 text-white">Gelanggang Juara</h3>
+                    <p class="text-white/90">Dengan raihan 11 gelar juara kasta tertinggi liga Indonesia, Persija menasbihkan diri sebagai klub tersukses dan paling ditakuti.</p>
+                </div>
+                
+                <div class="bg-brand-gray p-8 rounded-2xl hover-scale border border-gray-700">
+                    <div class="text-brand-orange mb-4">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold mb-3">The Jakmania</h3>
+                    <p class="text-gray-400">Bukan sekadar suporter, tapi jiwa tim. Militansi lautan oranye selalu menjadi teror bagi lawan dan energi ekstra di lapangan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KORWIL JAKMANIA (Tigaraksa & Solear) -->
+    <section id="korwil-batas" class="py-20 bg-brand-light relative border-b-8 border-brand-orange">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="flex justify-center items-center gap-4 mb-4">
+                    <div class="w-8 h-1 bg-brand-orange"></div>
+                    <h4 class="font-heading text-brand-orange uppercase tracking-widest font-bold">KorwiL</h4>
+                    <div class="w-8 h-1 bg-brand-orange"></div>
+                </div>
+                <h2 class="font-heading text-3xl md:text-5xl font-bold text-brand-dark mb-4">
+                    Luar Jakarta Luar Biasa
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">Jak Korwil (Kordinator Wilayah) Organisasi The Jakmania berfungsi sebagai pusat informasi, koordinasi, dan basis digital bagi para anggota suporter Persija Jakarta di wilayah tertentu.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <!-- Card Stasiun Tigaraksa -->
+                <div class="bg-white p-10 rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] hover-scale border-t-4 border-brand-orange relative overflow-hidden group">
+                    <div class="absolute -right-8 -top-8 text-brand-orange opacity-5 group-hover:opacity-10 transition-opacity duration-300">
+                        <svg class="w-48 h-48" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 6l5 10H7l5-10z"/></svg>
+                    </div>
+                    <div class="inline-block bg-brand-orange/10 text-brand-orange font-bold px-4 py-1.5 rounded-full text-xs tracking-wider mb-6">
+                        Satu Jalur, Satu Warna, Persija di Dada.
+                    </div>
+                    <h3 class="font-heading text-3xl font-bold mb-4 text-brand-dark">Jakmania Stasiun Tigaraksa</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        Bagi Jakmania di wilayah ini, Stasiun Tigaraksa bukan sekadar tempat transit transportasi, melainkan markas pergerakan. Di sinilah KRL menjadi saksi bisu berkumpulnya lautan oren yang siap menempuh jarak jauh membelah rel demi mengawal Sang Macan Kemayoran di GBK maupun JIS.
+                    </p>
+                    <div class="flex items-center text-sm font-semibold text-brand-orange">
+                        <a href="https://www.instagram.com/jakmania_stasiuntigaraksa" target="_blank" rel="noopener noreferrer">
+                            Kunjungi Instagram JakStasiunTigaraksa
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card Solear -->
+                <div class="bg-white p-10 rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.2)] hover-scale border-t-4 border-brand-red relative overflow-hidden group">
+                    <div class="absolute -right-8 -top-8 text-brand-red opacity-10 group-hover:opacity-20 transition-opacity duration-300">
+                        <svg class="w-48 h-48" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+                    </div>
+                    <div class="inline-block bg-brand-red/20 text-brand-red font-bold px-4 py-1.5 rounded-full text-xs tracking-wider mb-6">
+                        Solear Juga Persija!
+                    </div>
+                    <h3 class="font-heading text-3xl font-bold mb-4 text-brand-dark">Jakmania Solear</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        Dari ujung barat yang rimbun, Jakmania Solear Kami tidak dekat secara geografis dengan ibu kota, tapi cinta dan loyalitas kami untuk Persija Jakarta tidak pernah berjarak, sub-korwil ini berdiri tegak sebagai benteng pertahanan pendukung Persija yang tangguh dan selalu lantang bersuara.
+                    </p>
+                    <div class="flex items-center text-sm font-semibold text-brand-red">
+                        <a href="https://www.instagram.com/jakmania.solear" target="_blank" rel="noopener noreferrer">
+                            Kunjungi Instagram JakSolear
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERI PERSIJA -->
+    <section id="galeri-persija" class="py-24 bg-brand-dark relative border-b-8 border-brand-red">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="flex justify-center items-center gap-4 mb-4">
+                    <div class="w-8 h-1 bg-brand-orange"></div>
+                    <h4 class="font-heading text-brand-orange uppercase tracking-widest font-bold">Album Sejarah</h4>
+                    <div class="w-8 h-1 bg-brand-orange"></div>
+                </div>
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
+                    Galeri Macan Kemayoran
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Momen-momen magis, koreografi The Jakmania, dan kejayaan Persija di atas lapangan hijau yang diabadikan dalam lensa.</p>
+            </div>
+
+            <!-- Grid Galeri -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Foto 1 -->
+                <div class="group relative rounded-xl overflow-hidden shadow-lg bg-brand-gray aspect-square cursor-pointer">
+                    <img src="https://cdn.phototourl.com/member/2026-10-04-ee17da19-dcf8-4f27-b227-e8724484d607.jpg" alt="Atmosfer GBK" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="font-heading text-2xl font-bold text-brand-orange">Lautan Oranye</h3>
+                        <p class="text-gray-300 text-sm mt-1">Tragedi terjadinya persib wo di stadiun Lebak bulus.</p>
+                    </div>
+                </div>
+                <!-- Foto 2 -->
+                <div class="group relative rounded-xl overflow-hidden shadow-lg bg-brand-gray aspect-square cursor-pointer">
+                    <img src="https://cdn.phototourl.com/member/2026-10-04-7a4cc21c-2d2f-4066-b233-640a28e03e6a.jpg" alt="Selebrasi Pemain" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="font-heading text-2xl font-bold text-brand-orange">Gol Kemenangan</h3>
+                        <p class="text-gray-300 text-sm mt-1">Gol kemenangan di detik detik terakhir oleh Ivan Mamut</p>
+                    </div>
+                </div>
+                <!-- Foto 3 -->
+                <div class="group relative rounded-xl overflow-hidden shadow-lg bg-brand-gray aspect-square cursor-pointer">
+                    <img src="https://cdn.phototourl.com/member/2026-10-04-f7c93baa-d3e7-4a57-874b-58dff99f66f0.jpg" alt="Away Days" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="font-heading text-2xl font-bold text-brand-orange">Shin Tae Yong</h3>
+                        <p class="text-gray-300 text-sm mt-1">Awal era keganasan Shin tae yong dengan clean sheet di 3 laga awal.</p>
+                    </div>
+                </div>
+                <!-- Foto 4 -->
+                <div class="group relative rounded-xl overflow-hidden shadow-lg bg-brand-gray aspect-square cursor-pointer">
+                    <img src="https://cdn.phototourl.com/member/2026-10-04-43ed3829-c6de-41a5-9ae7-54a60eae3e7d.jpg" alt="JIS Stadium" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="font-heading text-2xl font-bold text-brand-orange">CurvaNordPersija</h3>
+                        <p class="text-gray-300 text-sm mt-1">Tribun utara yang diisi oleh kelompok atau supporter persija yang biasa ditakuti lawan lawannya</p>
+                    </div>
+                </div>
+                <!-- Foto 5 -->
+                <div class="group relative rounded-xl overflow-hidden shadow-lg bg-brand-gray aspect-square cursor-pointer">
+                    <img src="https://cdn.phototourl.com/member/2026-10-04-7b209a77-2e8f-4fe9-8b29-936b039c9717.jpg" alt="Legenda Persija" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="font-heading text-2xl font-bold text-brand-orange">Marco Simic</h3>
+                        <p class="text-gray-300 text-sm mt-1">Pemain legenda yang tak lekang oleh waktu.</p>
+                    </div>
+                </div>
+                <!-- Foto 6 -->
+                <div class="group relative rounded-xl overflow-hidden shadow-lg bg-brand-gray aspect-square cursor-pointer">
+                    <img src="https://cdn.phototourl.com/member/2026-10-04-1c07b0e4-06d2-4723-9fb6-ec0c64cea53c.jpg" alt="Koreografi" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="font-heading text-2xl font-bold text-brand-orange">Jangan Tunduk</h3>
+                        <p class="text-gray-300 text-sm mt-1">Mentalitas pantang menyerah dan tidak pernah tunduk pada lawannya</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <a href="https://www.persija.id/media/gallery" target="_blank">
+                    <button class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition">
+                        Lihat Lainnya
+                    </button>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION VIDEO BARU -->
+    <section id="video-persija" class="py-24 bg-brand-dark/95 relative border-b-8 border-brand-orange">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="flex justify-center items-center gap-4 mb-4">
+                    <div class="w-8 h-1 bg-brand-orange"></div>
+                    <h4 class="font-heading text-brand-orange uppercase tracking-widest font-bold">Video Eksklusif</h4>
+                    <div class="w-8 h-1 bg-brand-orange"></div>
+                </div>
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
+                    Atmosfer & Perjuangan Macan Kemayoran
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Saksikan rekaman video yang mengabadikan denyut nadi, nyanyian, dan militansi pendukung setia Persija Jakarta.</p>
+            </div>
+
+            <!-- Video Container -->
+            <div class="max-w-sm mx-auto aspect-[9/16] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(249,80,1,0.3)] border border-brand-orange/30 bg-black">
+                <video 
+                    src="https://videotourl.com/videos/1791110930884-757d170e-b892-4975-a923-333a604e22d7.mp4" 
+                    controls 
+                    playsinline 
+                    preload="metadata"
+                    class="w-full h-full object-cover"
+                ></video>
+            </div>
+        </div>
+    </section>
+
+    <section id="keindahan" class="py-24 bg-brand-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="flex justify-center items-center gap-4 mb-4">
+                    <div class="w-8 h-1 bg-brand-orange"></div>
+                    <h4 class="font-heading text-brand-orange uppercase tracking-widest font-bold">Estetika Kota</h4>
+                    <div class="w-8 h-1 bg-brand-orange"></div>
+                </div>
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-brand-dark mb-4">
+                    Wajah Menawan Sang Ibu Kota
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">Perpaduan antara sejarah, modernitas, dan pusat semangat olahraga yang menjadikan Jakarta kota tak tertandingi.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="group relative rounded-2xl overflow-hidden shadow-lg bg-white hover-scale">
+                    <div class="relative h-80 img-gradient overflow-hidden">
+                        <img src="https://cdn.phototourl.com/member/2026-10-04-7166a990-fe3b-4e22-bb8c-73eacacb7bef.jpg" alt="Monumen Nasional" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-10 text-white">
+                        <span class="bg-brand-orange text-xs font-bold px-3 py-1 rounded uppercase tracking-wider mb-2 inline-block">Ikon Sejarah</span>
+                        <h3 class="font-heading text-2xl font-bold mb-2">Monumen Nasional</h3>
+                        <p class="text-gray-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">Tugu emas menjulang yang menyimbolkan semangat menyala perjuangan bangsa Indonesia.</p>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-2xl overflow-hidden shadow-lg bg-white hover-scale">
+                    <div class="relative h-80 img-gradient overflow-hidden">
+                        <img src="https://cdn.phototourl.com/member/2026-10-04-a42a5034-b6c5-4f47-8301-562e131f14a0.jpg" alt="Stadion GBK" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-10 text-white">
+                        <span class="bg-brand-red text-xs font-bold px-3 py-1 rounded uppercase tracking-wider mb-2 inline-block">Rumah Macan</span>
+                        <h3 class="font-heading text-2xl font-bold mb-2">Stadion Utama GBK</h3>
+                        <p class="text-gray-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">Rumah saksi sejarah, lautan oranye, dan tempat di mana semangat Macan Kemayoran menyatu dengan suara puluhan ribu The Jakmania.</p>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-2xl overflow-hidden shadow-lg bg-white hover-scale">
+                    <div class="relative h-80 img-gradient overflow-hidden">
+                        <img src="https://cdn.phototourl.com/member/2026-10-04-36084a0e-db2c-4342-a5b5-ac6ac9065801.jpg" alt="Sudirman Skyline" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-10 text-white">
+                        <span class="bg-brand-dark text-xs font-bold px-3 py-1 rounded uppercase tracking-wider mb-2 inline-block border border-gray-600">Metropolitan</span>
+                        <h3 class="font-heading text-2xl font-bold mb-2">Gemerlap Sudirman</h3>
+                        <p class="text-gray-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">Sudirman adalah bukti nyata bahwa Jakarta selalu punya cerita, di jam paling sunyi sekalipun.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-brand-dark text-white pt-16 pb-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-6">
+                <div>
+                    <a href="#" class="font-heading font-bold text-3xl tracking-wider text-brand-orange">
+                        Rizki<span class="text-white">Maulana</span>
+                    </a>
+                    <p class="text-gray-400 mt-2 max-w-sm">Dedikasi untuk Kota Jakarta dan Persija......Jakartaa KotaNya Para Juara!</p>
+                </div>
+                <div class="flex space-x-6">
+                    <!-- LINK INSTAGRAM SUDAH DIARAHKAN KE IG PRIBADI -->
+                    <!-- JANGAN LUPA UBAH "USERNAME_IG_KAMU" DI BAWAH INI -->
+                    <a href="https://instagram.com/rrzkyy28_" target="_blank" class="text-gray-400 hover:text-brand-orange transition" title="KEPOO LUU">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center text-gray-500 text-sm border-t border-gray-800 pt-8 mt-8">
+                &copy; 2026 PSJ-JKT. Dibuat dengan semangat kebanggaan Jakarta(Rizki Maulana). Inspired By +021 Boys
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
